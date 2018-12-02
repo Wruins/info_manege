@@ -49,7 +49,7 @@ private:
 class WorkList
 {
 public:
-	WorkList();
+	WorkList() {};
 	~WorkList(){};
 	void ScreenShow();   // 界面显示
 	void ReadInfoFile();//读取文件信息到内存中

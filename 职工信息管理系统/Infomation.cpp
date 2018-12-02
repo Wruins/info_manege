@@ -3,17 +3,6 @@
 #include <string>
 using namespace std;
 
-WorkList::WorkList()
-{
-	/*Worker w1,w2;
-	workerArray.push_back(w1);
-	workerArray.push_back(w2);
-	for(size_t i=0; i<workerArray.size(); i++)
-	{
-		workerArray[i];
-	}*/
-};
-
 void WorkList::ScreenShow()
 {
 	int m;
@@ -29,34 +18,47 @@ void WorkList::ScreenShow()
 	cout<<"7.职工信息保存"<<endl;
 	cout<<"0.退出"<<endl;
 	cout<<"请选择数字编号0~7："<<endl;
-	cin>>m;
-	switch(m)
+	while (1)
 	{
-	case 1:AddWorker();break;
-	case 2:Modification();break;
-	case 3:DeleteWorker();break;
-	case 4:SortWorker();break;
-	case 5:FindWorker(i);break;
-	case 6:ShowWorker();break;
-	case 7:SaveInfoFile();break;
-	case 0:exit(0);break;
-	default:
-		cout<<"请重新输入"<<endl;
+		cin >> m;
+		switch (m)
+		{
+		case 1:AddWorker(); break;
+		case 2:Modification(); break;
+		case 3:DeleteWorker(); break;
+		case 4:SortWorker(); break;
+		case 5:FindWorker(i); break;
+		case 6:ShowWorker(); break;
+		case 7:SaveInfoFile(); break;
+		case 0:exit(0); break;
+		default:
+			//cin.clear(); cin.sync();
+			cout << "请重新输入" << endl;
+			break;
+		}
 	}
-	cout << "是否继续(y/n)" << endl;
-	cin >> c;
-	if (c == 'y')
-		ScreenShow();
-	else if (c == 'n')
-		exit(0);
-
+	cout << "是否继续(Y/N)" << endl;
+	//cin >> c;
+	while (1)
+	{
+		cin >> c;
+		if (c == 'y' || c == 'Y')
+			ScreenShow();
+		else if (c == 'n' || c == 'N')
+			exit(0);
+		else
+		{
+			cin.clear();
+			//cin.sync();
+			cout << "输入有误！" << endl;
+		}
+	}
 }
-
 
 void WorkList::AddWorker()
 {
 	int m;
-	cout<<"要输入信息有："<<endl;
+	cout<<"要输入信息组数有："<<endl;
 	cin>>m;
 	for(int i=0;i<m;i++)
 	{
@@ -409,6 +411,8 @@ void WorkList::DownSort()
 			}
 			ShowWorker();
 			break;
+		default:
+			cout << "输入有误" << endl;
 	}
 }
 

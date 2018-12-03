@@ -36,7 +36,7 @@ void WorkList::ScreenShow()
 			if (cin.fail() == 1)
 			{
 				cin.clear();
-				cin.sync();
+				cin.ignore();
 				cout << "类型有误，重新输入" << endl;
 				continue;
 			}
@@ -51,7 +51,6 @@ void WorkList::ScreenShow()
 		case 6:ShowWorker(); break;
 		case 7:SaveInfoFile(); break;
 		case 0:exit(0); break;
-		default:cout << "请重新输入" << endl;
 		}
 	} while (m<=0&&m>=7);
 	

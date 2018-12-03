@@ -5,7 +5,7 @@ using namespace std;
 
 void WorkList::ScreenShow()
 {
-	int m=8;
+	int m;
 	char c;
 	size_t i=0;
 	cout<<"职工信息管理系统主菜单"<<endl;
@@ -18,16 +18,20 @@ void WorkList::ScreenShow()
 	cout<<"7.职工信息保存"<<endl;
 	cout<<"0.退出"<<endl;
 	cout<<"请选择数字编号0~7："<<endl;
-	while (1)
+	do
 	{
 		while (1)
 		{
 			cin >> m;
 			if (cin.good() == 1)
 			{
-				if(m > 7 || m < 0) 
+				if (m > 7 || m < 0)
+				{
 					cout << "选择有误，重新输入" << endl;
-				break;
+					continue;
+				}
+				else break;
+				
 			}
 			if (cin.fail() == 1)
 			{
@@ -49,7 +53,7 @@ void WorkList::ScreenShow()
 		case 0:exit(0); break;
 		default:cout << "请重新输入" << endl;
 		}
-	}
+	} while (m<=0&&m>=7);
 	
 	cout << "是否继续(Y/N)" << endl;
 	//cin >> c;

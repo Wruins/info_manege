@@ -1,5 +1,6 @@
 #include"Infomation.h"
 #include<iostream>
+#include <vector>
 #include <string>
 using namespace std;
 
@@ -7,7 +8,6 @@ void WorkList::ScreenShow()
 {
 	int m;
 	char c;
-	size_t i=0;
 	cout<<"职工信息管理系统主菜单"<<endl;
 	cout<<"1.职工信息添加"<<endl;
 	cout<<"2.职工信息修改"<<endl;
@@ -47,7 +47,7 @@ void WorkList::ScreenShow()
 		case 2:Modification(); break;
 		case 3:DeleteWorker(); break;
 		case 4:SortWorker(); break;
-		case 5:FindWorker(i); break;
+		case 5:FindWorker(fdi); break;
 		case 6:ShowWorker(); break;
 		case 7:SaveInfoFile(); break;
 		case 0:exit(0); break;
@@ -66,7 +66,6 @@ void WorkList::ScreenShow()
 		else
 		{
 			cin.clear();
-			//cin.sync();
 			cout << "输入有误！" << endl;
 		}
 	}
@@ -83,6 +82,7 @@ void WorkList::AddWorker()
 	workerArray.push_back(m_TmpWorker);
 	cout<<endl;
 	}
+	SaveInfoFile();
 }
 
 void WorkList::ShowWorker()
@@ -98,16 +98,16 @@ void WorkList::ShowWorker()
 void Worker::InputData()
 {	 
 	cout<<"请输入要添加员工的工号："<<endl;
-	cin>>num;
+	cin >> num; cin.ignore();
 	cout<<"请输入职工信息："<<endl;
 	cout<<"工号："<<num<<endl;
-	cout<<"姓名：";cin>>name;
-	cout<<"性别(M/F)：";cin>>sex;
-	cout<<"学历：";cin>>education;
-	cout<<"年龄：";cin>>age;
-	cout<<"工资：";cin>>wage;
-	cout<<"地址：";cin>>address;
-	cout<<"电话：";cin>>telephone;
+	cout<<"姓名：";cin>>name; cin.ignore();
+	cout<<"性别(M/F)：";cin>>sex; cin.ignore();
+	cout<<"学历：";cin>>education; cin.ignore();
+	cout<<"年龄：";cin>>age; cin.ignore();
+	cout<<"工资：";cin>>wage; cin.ignore();
+	cout<<"地址：";cin>>address; cin.ignore();
+	cout<<"电话：";cin>>telephone; cin.ignore();
 
 }
 
@@ -124,7 +124,7 @@ void Worker::Show()
 
 }
 
-void WorkList::FindWorker(size_t i)//查找单个
+void WorkList::FindWorker(size_t)//查找单个
 {
 	int m;
 	size_t findlen=0;
@@ -137,18 +137,18 @@ void WorkList::FindWorker(size_t i)//查找单个
 		char num[10];
 		cout << "请输入查找的工号：" << endl;
 		cin >> num;
-		for (i = 0; i < workerArray.size(); i++)
+		for (fdi = 0; fdi < workerArray.size(); fdi++)
 		{
-			if (strcmp(workerArray[i].GetNumber() , num)==0)
+			if (strcmp(workerArray[fdi].GetNumber() , num)==0)
 				break;
 		}
-		if (i == workerArray.size())
+		if (fdi == workerArray.size())
 		{
 			cout << "查找失败！\n没有找到查找工号为" << num << "的人" << endl;
 			return ;
 		}
 		cout << "查找成功" << endl;
-		workerArray[i].Show();
+		workerArray[fdi].Show();
 
 	}
 	else if (m == 2)
@@ -156,11 +156,11 @@ void WorkList::FindWorker(size_t i)//查找单个
 		char nam[30];
 		cout << "请输入查找的姓名：" << endl;
 		cin >> nam;
-		for (i = 0; i < workerArray.size(); i++)
+		for (fdi = 0; fdi < workerArray.size(); fdi++)
 		{
-			if (strcmp(workerArray[i].GetName() , nam) == 0)
+			if (strcmp(workerArray[fdi].GetName() , nam) == 0)
 			{
-				workerArray[i].Show();
+				workerArray[fdi].Show();
 				cout<<endl;
 				findlen++;
 			}
@@ -178,125 +178,105 @@ void WorkList::FindWorker(size_t i)//查找单个
 
 void WorkList::Modification()//修改
 {
-	size_t i=0;
 	int c, Age;//j
 	//char n;
-	char nam, addr, numb, edu, tel;
+	char nam[30], addr[50], numb[10], edu[20], tel[20];
 	double Wage;
 	char Sex;
-	FindWorker(i);
-/*	cout << "请输入要修改的方式：" << endl;
-	cout << "1.根据工号查找" << endl;
-	cout << "2.根据姓名查找" << endl;
-	cin >> j;
-	if (j == 1)
+	FindWorker(fdi);
+	cout << "员工信息：" << endl;
+	cout << "1.工号" << endl;
+	cout << "2.姓名" << endl;
+	cout << "3.性别(M/F)" << endl;
+	cout << "4.学历" << endl;
+	cout << "5.年龄" << endl;
+	cout << "6.工资" << endl;
+	cout << "7.地址" << endl;
+	cout << "8.电话" << endl;
+	cout << "请输入修改的选项的" << endl;
+	while (1)
 	{
-		cout << "请输入查找的工号：" << endl;
-		cin >> n;
-		for (i = 0; i < workerArray.size(); i++)
+		cin >> c;
+		if (cin.good() == 1)
 		{
-			if (workerArray[i].GetNumber() == n)
-				break;
+			if (c > 7 || c < 0)
+			{
+				cout << "选择有误，重新输入" << endl;
+				continue;
+			}
+			else break;
+
 		}
-		if (i == workerArray.size())
+		if (cin.fail() == 1)
 		{
-			cout << "查找失败！\n没有找到查找工号为" << n << "的人" << endl;
-			return ;
+			cin.clear();
+			cin.ignore();
+			cout << "类型有误，重新输入" << endl;
+			continue;
 		}
-		cout << "查找成功" << endl;
 
 	}
-	else if (j == 2)
-	{
-		cout << "请输入查找的姓名：" << endl;
-		cin >> n;
-		for (i = 0; i < workerArray.size(); i++)
-		{
-			if (workerArray[i].GetName() == n)
-				break;
-		}
-		if (i == workerArray.size())
-		{
-			cout << "查找失败！\n没有找到查找姓名为" << n << "的人" << endl;
-			return ;
-		}
-		cout << "查找成功" << endl;
-	
-	}
-*/
-	cout << "员工信息：" << endl;
-	cout << "1-------------工号" << endl;
-	cout << "2-------------姓名" << endl;
-	cout << "3---------性别(M/F)" << endl;
-	cout << "4-------------学历" << endl;
-	cout << "5-------------年龄" << endl;
-	cout << "6-------------工资" << endl;
-	cout << "7-------------地址" << endl;
-	cout << "8-------------电话" << endl;
-	cout << "请输入修改的选项的" << endl;
-	cin >> c;
+
 	switch (c)
 	{
 	case 1:
 		cout << "输入要修改的工号" << endl;
 		cin >> numb;
-		workerArray[i].SetNumber(numb);
+		workerArray[fdi].SetNumber(*numb);
 		cout << "修改成功" << endl;
 		break;
 	case 2:
 		cout << "输入要修改的姓名" << endl;
 		cin >> nam;
-		workerArray[i].SetName(nam);
+		workerArray[fdi].SetName(*nam);
 		cout << "修改成功" << endl;
 		break;
 	case 3:
 		cout << "输入要修改的性别(M/F)" << endl;
 		cin >> Sex;
-		workerArray[i].SetSex(Sex);
+		workerArray[fdi].SetSex(Sex);
 		cout << "修改成功" << endl;
 		break;
 	case 4:
 		cout << "输入要修改的学历" << endl;
 		cin >> edu;
-		workerArray[i].SetEducation(edu);
+		workerArray[fdi].SetEducation(*edu);
 		cout << "修改成功" << endl;
 		break;
 	case 5:
 		cout << "输入要修改的年龄" << endl;
 		cin >> Age;
-		workerArray[i].SetAge(Age);
+		workerArray[fdi].SetAge(Age);
 		cout << "修改成功" << endl;
 		break;
 	case 6:
 		cout << "输入要修改的工资" << endl;
 		cin >> Wage;
-		workerArray[i].SetWage(Wage);
+		workerArray[fdi].SetWage(Wage);
 		cout << "修改成功" << endl;
 		break;
 	case 7:
 		cout << "输入要修改的地址" << endl;
 		cin >> addr;
-		workerArray[i].SetAddress(addr);
+		workerArray[fdi].SetAddress(*addr);
 		cout << "修改成功" << endl;
 		break;
 	case 8:
 		cout << "输入要修改的电话" << endl;
 		cin >> tel;
-		workerArray[i].SetTelephone(tel);
+		workerArray[fdi].SetTelephone(*tel);
 		break;
 		cout << "修改成功" << endl;
-	default:
-		cout << "错误的输入!\n" << endl;
-		break;
 	}
+	SaveInfoFile();
 }
 
 void WorkList::DeleteWorker()
 {
-	size_t i=0;
-	FindWorker(i);	
-	workerArray.erase(workerArray.begin() + i);//删掉i的那个数组
+	FindWorker(fdi);	
+	workerArray.erase(workerArray.begin() + fdi);//删掉fdi的那个数组
 	cout << "操作成功" << endl;
+	SaveInfoFile();
 }
 
 void WorkList::SortWorker()
@@ -474,5 +454,4 @@ void WorkList::ReadInfoFile()
 		workerArray.push_back(m_TmpWorker);
 	}
 	ioFile.close();
-
 }

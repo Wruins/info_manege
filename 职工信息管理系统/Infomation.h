@@ -63,8 +63,9 @@ private:
 	void SaveInfoFile(); // 保存内存信息到文件
 	//void ReadInfoFile(); // 读取文件信息到内存中   
 	void ShowWorker();   // 显示所有员工信息**
-	void FindWorker(size_t i);   // 查看想看的员工信息**
+	void FindWorker(size_t);   // 查看想看的员工信息**
 	void AddWorker();    // 添加员工信息**
+	size_t fdi;
 	vector<Worker> workerArray;
 	Worker m_TmpWorker;
 };
